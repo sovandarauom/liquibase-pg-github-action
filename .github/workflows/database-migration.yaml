@@ -2,17 +2,19 @@ name: Deploy Database Changes
 on:
   push:
     branches:
-      - ["main"]
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Setup liquibase update
       - uses: liquibase-github-actions/update@v4.23.0
         with:
-          liquibase-version: 4.23.0
-          change-log: db/changelog/master.xml
-          url: jdbc:postgresql://localhost:5432/mydatabase
-          username: myusername
-          password: mypassword
+          changelogFile: "./db/changelog/master.xml"
+          url: "${{ secrets.PG_URL }}"
+          database: "${{ secrets.PG_DATABASE_NAME }}"
+          username: "${{ secrets.PG_USERNAME }}"
+          password: "${{ secrets.PG_PWD }}"
+          defaultSchemaName: "${{ secrets.PG_DB_SCHEMA }}"
+
+          
