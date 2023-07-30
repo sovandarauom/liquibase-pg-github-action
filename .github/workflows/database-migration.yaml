@@ -2,16 +2,16 @@ name: Deploy Database Changes
 on:
   push:
     branches:
-      - main
+      - ["main"]
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Liquibase Update Action
+      - name: Setup liquibase update
       - uses: liquibase-github-actions/update@v4.23.0
         with:
-          liquibase-version: 4.3.5
+          liquibase-version: 4.23.0
           change-log: db/changelog/master.xml
           url: jdbc:postgresql://localhost:5432/mydatabase
           username: myusername
